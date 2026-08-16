@@ -18,14 +18,14 @@ export async function onRequestPost(context: any) {
   const technicalTerms = Array.isArray(body?.technicalTerms)
     ? body.technicalTerms.filter((term: unknown) => typeof term === 'string').slice(0, 80)
     : [];
-  const context = typeof body?.context === 'string' ? body.context.slice(0, 2400) : '';
+  const neighboringContext = typeof body?.context === 'string' ? body.context.slice(0, 2400) : '';
   if (!text) return json({ error: 'Text is required' }, 400);
   if (text.length > 5000) return json({ error: 'Cue text is too long' }, 413);
   if (!env?.AI?.run) return json({ error: 'Cloudflare Workers AI binding AI is not configured' }, 500);
 
   const replacements = technicalTerms.map((term: string, index: number) => ({ term, token: `⟦SRT_TERM_${index}⟧` }));
   const protectedText = replacements.reduce((value: string, item: { term: string; token: string }) => value.split(item.term).join(item.token), text);
-  const protectedContext = replacements.reduce((value: string, item: { term: string; token: string }) => value.split(item.term).join(item.token), context);
+  const protectedContext = replacements.reduce((value: string, item: { term: string; token: string }) => value.split(item.term).join(item.token), neighboringContext);
   const glossary = replacements.length ? replacements.map((item) => `${item.token} = ${item.term}`).join('\n') : 'မရှိပါ';
 
   try {
