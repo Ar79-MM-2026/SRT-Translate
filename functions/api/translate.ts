@@ -28,8 +28,8 @@ export async function onRequestPost(context: any) {
   try {
     const result = await env.AI.run('@cf/meta/m2m100-1.2b', {
       text: protectedText,
-      source_lang: 'eng',
-      target_lang: 'mya',
+      source_lang: 'en',
+      target_lang: 'my',
     });
     let translation = typeof result?.translated_text === 'string' ? result.translated_text.trim() : '';
     for (const item of replacements) translation = translation.split(item.token).join(item.term);

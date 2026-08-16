@@ -20,7 +20,8 @@ export default {
     const prompt = `Translate the following subtitle text into natural, concise Burmese (Myanmar language). Preserve line breaks where possible. Do not add explanations, quotation marks, speaker labels, or markdown. Keep every token beginning with __SRT_TERM_ exactly unchanged.\n\nSubtitle text:\n${protectedText}`;
 
     try {
-      const result = await env.AI.run('@cf/meta/m2m100-1.2b', { text: protectedText, source_lang: 'eng', target_lang: 'mya' });
+      const result = await env.AI.run('@cf/meta/m2m100-1.2b', { text: protectedText, source_lang: 'en',
+        target_lang: 'my', });
       let translation = result?.translated_text?.trim();
       for (const item of replacements) translation = translation.split(item.token).join(item.term);
       if (!translation) return json({ error: 'Model returned no translation' }, 502);
