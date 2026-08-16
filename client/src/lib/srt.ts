@@ -74,12 +74,12 @@ export function validateOutput(original: SrtCue[], translated: SrtCue[]): string
   return errors;
 }
 
-export async function translateCueText(text: string, technicalTerms: string[]): Promise<string> {
+export async function translateCueText(text: string, technicalTerms: string[], context = ''): Promise<string> {
   const endpoint = import.meta.env.VITE_TRANSLATE_ENDPOINT || '/api/translate';
   const response = await fetch(endpoint, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ text, targetLanguage: 'my', technicalTerms }),
+    body: JSON.stringify({ text, targetLanguage: 'my', technicalTerms, context }),
   });
   const raw = await response.text();
   let data: { translation?: string; error?: string } = {};

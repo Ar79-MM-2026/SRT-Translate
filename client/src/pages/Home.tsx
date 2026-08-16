@@ -65,7 +65,8 @@ export default function Home() {
     try {
       for (let i = 0; i < source.length; i += 1) {
         const cue = source[i];
-        const text = await translateCueText(cue.text, preserveTerms ? terms : []);
+        const context = [source[i - 1]?.text, source[i + 1]?.text].filter(Boolean).join('\n');
+        const text = await translateCueText(cue.text, preserveTerms ? terms : [], context);
         output.push({ ...cue, text });
         setProgress(Math.round(((i + 1) / source.length) * 100));
         setTranslated([...output]);

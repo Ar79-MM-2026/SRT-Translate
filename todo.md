@@ -1,6 +1,7 @@
-# Safe GitHub Upload
+# Burmese Translation Quality Improvement
 
-- [ ] Cancel the pending flattened-file upload so nested paths are not lost.
-- [ ] Prepare a repository-safe upload strategy that preserves `client/` and `functions/api/` paths.
-- [ ] Commit only after the correct path structure is visible.
-- [ ] Verify Cloudflare Pages deployment settings and endpoint readiness.
+- [x] Inspect the current Cloudflare model, prompt, chunking, and placeholder restoration flow.
+- [x] Add context-aware subtitle instructions and Burmese naturalness rules.
+- [x] Preserve technical terms deterministically and avoid numbering/timestamp contamination.
+- [x] Validate sample output, SRT structure, and model response handling.
+- [ ] Push the improved implementation and save a checkpoint.
