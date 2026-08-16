@@ -29,7 +29,7 @@ export async function onRequestPost(context: any) {
   const glossary = replacements.length ? replacements.map((item) => `${item.token} = ${item.term}`).join('\n') : 'မရှိပါ';
 
   try {
-    const result = await env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
+    const result = await env.AI.run('@cf/meta/llama-3.1-8b-instruct-fast', {
       messages: [
         {
           role: 'system',
