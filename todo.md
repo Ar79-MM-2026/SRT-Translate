@@ -1,7 +1,6 @@
-# Burmese Translation Quality Improvement
+# Cloudflare Pages Build Fix
 
-- [x] Inspect the current Cloudflare model, prompt, chunking, and placeholder restoration flow.
-- [x] Add context-aware subtitle instructions and Burmese naturalness rules.
-- [x] Preserve technical terms deterministically and avoid numbering/timestamp contamination.
-- [x] Validate sample output, SRT structure, and model response handling.
-- [ ] Push the improved implementation and save a checkpoint.
+- [ ] Rename the local request context string so it does not shadow the `onRequestPost(context)` handler parameter.
+- [ ] Run TypeScript and production build checks, including Pages Functions bundling where possible.
+- [ ] Push the corrected function to GitHub and confirm the new commit.
+- [ ] Report the redeploy step and remaining non-blocking warnings.
