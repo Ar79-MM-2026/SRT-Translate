@@ -85,7 +85,7 @@ export async function translateCueText(text: string, technicalTerms: string[], c
   let data: { translation?: string; error?: string } = {};
   try { data = JSON.parse(raw) as { translation?: string; error?: string }; } catch { /* non-JSON response */ }
   if (!response.ok) {
-    const detail = data.error || (raw.includes('<!doctype') ? 'Translation endpoint မချိတ်ရသေးပါ။ Cloudflare Pages Function ကို deploy လုပ်ပြီး Workers AI binding `AI` ထည့်ပါ။' : raw.slice(0, 160));
+    const detail = data.error || (raw.includes('<!doctype') ? 'Translation endpoint မချိတ်ရသေးပါ။ Manus server ကို run/deploy လုပ်ထားကြောင်း စစ်ပါ။' : raw.slice(0, 160));
     throw new Error(`Translation service returned ${response.status}: ${detail}`);
   }
   if (!data.translation) throw new Error(data.error || 'Translation service returned no translation');
