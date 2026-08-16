@@ -81,8 +81,13 @@ export async function translateCueText(text: string, technicalTerms: string[]): 
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ text, targetLanguage: 'my', technicalTerms }),
   });
-  if (!response.ok) throw new Error(`Translation service returned ${response.status}`);
-  const data = (await response.json()) as { translation?: string };
-  if (!data.translation) throw new Error('Translation service returned no translation');
+  const raw = await response.text();
+  let data: { translation?: string; error?: string } = {};
+  try { data = JSON.parse(raw) as { translation?: string; error?: string }; } catch { /* non-JSON response */ }
+  if (!response.ok) {
+    const detail = data.error || (raw.includes('<!doctype') ? 'Translation endpoint မချိတ်ရသေးပါ။ Cloudflare Pages Function ကို deploy လုပ်ပြီး Workers AI binding `AI` ထည့်ပါ။' : raw.slice(0, 160));
+    throw new Error(`Translation service returned ${response.status}: ${detail}`);
+  }
+  if (!data.translation) throw new Error(data.error || 'Translation service returned no translation');
   return data.translation;
 }

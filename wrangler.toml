@@ -1,0 +1,5 @@
+name = "srt-burmese-translator"
+compatibility_date = "2026-08-16"
+
+[ai]
+binding = "AI"

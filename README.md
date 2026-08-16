@@ -26,11 +26,11 @@ Default frontend endpoint သည် `/api/translate` ဖြစ်သည်။ Lo
 
 ၁။ Repository ကို GitHub တွင် push လုပ်ပြီး Cloudflare Pages တွင် repository ကို connect လုပ်ပါ။ Build command ကို `pnpm build`၊ output directory ကို `dist/public` (သို့မဟုတ် Cloudflare Pages configuration အတိုင်း Vite output) သတ်မှတ်ပါ။
 
-၂။ `cloudflare-worker.js` ကို Cloudflare Worker အဖြစ် deploy လုပ်ပြီး Workers AI binding အမည်ကို `AI` သတ်မှတ်ပါ။ Worker route ကို `/api/translate` အဖြစ် Pages domain နှင့် ချိတ်ပါ။ Cloudflare dashboard တွင် Workers AI ကို enable လုပ်ပြီး model access ရှိကြောင်း စစ်ပါ။
+၂။ ယခု project ထဲတွင် `functions/api/translate.ts` ပါလာသောကြောင့် Cloudflare Pages deploy ပြုလုပ်လျှင် `/api/translate` route ကို Pages Function အဖြစ် အလိုအလျောက်အသုံးပြုနိုင်ပါသည်။ Cloudflare Pages project တွင် Workers AI binding အမည်ကို `AI` သတ်မှတ်ပါ။ `wrangler.toml` ထဲက binding configuration ကို reference အဖြစ်သုံးနိုင်ပါသည်။ `cloudflare-worker.js` သည် သီးခြား Worker route သုံးလိုသူများအတွက် adapter အဖြစ် ဆက်ထားပါသည်။ Cloudflare dashboard တွင် Workers AI ကို enable လုပ်ပြီး model access ရှိကြောင်း စစ်ပါ။
 
 ၃။ Pages project environment variable တွင် `VITE_TRANSLATE_ENDPOINT=/api/translate` ထားပါ။ သီးခြား Worker domain သုံးလျှင် absolute HTTPS endpoint သတ်မှတ်နိုင်သည်။ CORS allow-list ကို production Pages hostname နှင့်သာ ကန့်သတ်ရန် Worker ရှိ origin check ကို ပြင်ဆင်ပါ။
 
-၄။ Cloudflare deployment ပြီးလျှင် English subtitle တစ်ခု၊ multi-line cue တစ်ခု၊ `JavaScript`, `API`, `Netflix` စသည့် terms ပါသော cue တစ်ခု၊ နှင့် timestamp အမျိုးမျိုးပါသော file တစ်ခုဖြင့် စမ်းသပ်ပါ။ Download မလုပ်မီ UI တွင် `timestamps verified` ပြသရမည်။
+၄။ Cloudflare deployment ပြီးလျှင် browser cache ကို refresh လုပ်ပြီး English subtitle တစ်ခု၊ multi-line cue တစ်ခု၊ `JavaScript`, `API`, `Netflix` စသည့် terms ပါသော cue တစ်ခု၊ နှင့် timestamp အမျိုးမျိုးပါသော file တစ်ခုဖြင့် စမ်းသပ်ပါ။ `/api/translate` request သည် 200 ပြန်ရပြီး Download မလုပ်မီ UI တွင် `timestamp စစ်ပြီး` ပြသရမည်။ 500 error ဆက်ရှိနေပါက Pages → Settings → Functions/Workers AI ထဲတွင် `AI` binding ရှိမရှိ စစ်ပါ။
 
 ## GitHub credential security
 
