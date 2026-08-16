@@ -1,6 +1,6 @@
-# Cloudflare Pages Build Fix
+# Cloudflare Workers AI Model Replacement
 
-- [ ] Rename the local request context string so it does not shadow the `onRequestPost(context)` handler parameter.
-- [ ] Run TypeScript and production build checks, including Pages Functions bundling where possible.
-- [ ] Push the corrected function to GitHub and confirm the new commit.
-- [ ] Report the redeploy step and remaining non-blocking warnings.
+- [ ] Confirm a currently supported instruction-following Workers AI model and request schema.
+- [ ] Replace the deprecated model identifier in the Pages Function and standalone adapter.
+- [ ] Run TypeScript/build checks and push the corrected implementation.
+- [ ] Redeploy and test one real SRT translation request.

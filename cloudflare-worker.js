@@ -20,9 +20,15 @@ export default {
     const prompt = `Translate the following subtitle text into natural, concise Burmese (Myanmar language). Preserve line breaks where possible. Do not add explanations, quotation marks, speaker labels, or markdown. Keep every token beginning with __SRT_TERM_ exactly unchanged.\n\nSubtitle text:\n${protectedText}`;
 
     try {
-      const result = await env.AI.run('@cf/meta/m2m100-1.2b', { text: protectedText, source_lang: 'en',
-        target_lang: 'my', });
-      let translation = result?.translated_text?.trim();
+      const result = await env.AI.run('@cf/meta/llama-3.1-8b-instruct-fast', {
+        messages: [
+          { role: 'system', content: 'You are a professional Burmese subtitle translator. Return only natural, concise Myanmar Unicode subtitle text. Preserve technical tokens exactly.' },
+          { role: 'user', content: prompt },
+        ],
+        temperature: 0.15,
+        max_tokens: 512,
+      });
+      let translation = (result?.response ?? result?.result?.response ?? '').trim();
       for (const item of replacements) translation = translation.split(item.token).join(item.term);
       if (!translation) return json({ error: 'Model returned no translation' }, 502);
       return json({ translation });
